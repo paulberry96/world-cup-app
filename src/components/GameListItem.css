@@ -1,6 +1,6 @@
 .game-list-item {
     margin: 25px 0px;
-    box-shadow: 0px 5px 4px 0px rgb(0 0 0 / 10%);
+    box-shadow: 0px 10px 10px 0px rgb(0 0 0 / 30%);
     cursor:pointer;
 }
 
@@ -34,11 +34,11 @@
 }
 
 .status-bar.status-upcoming {
-    background-color:#a55c28;
+    background-color:#91582f;
 }
 
 .status-bar.status-in-progress {
-    background-color:#159d09;
+    background-color:#3f8939;
 }
 
 .game-status {
