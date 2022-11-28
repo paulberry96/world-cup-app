@@ -5,6 +5,8 @@ export default function GamePage(props) {
     const { gameId } = useParams();
 
     return (
-        <div>Game Page {gameId}</div>
+        <div className="page">
+
+        </div>
     );
 }

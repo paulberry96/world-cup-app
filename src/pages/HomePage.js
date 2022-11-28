@@ -4,8 +4,12 @@ import Stadiums from '../data/stadiums.json';
 import Players from '../data/players.json';
 import GameListItem from '../components/GameListItem';
 
+const NUM_GAMES = 5;
 
-const createGame = (id) => {
+const createGame = () => {
+
+    let id = parseInt(localStorage.getItem('id')) || 1;
+    localStorage.setItem('id', (id + 1).toString());
 
     // Randomize Teams and Players
     Teams.sort(() => 0.5 - Math.random());
@@ -22,11 +26,11 @@ const createGame = (id) => {
     // Pick a random stadium
     const stadium = Stadiums[Math.floor(Math.random() * Stadiums.length)];
 
-    // Generate a random interval between 10 and 60 seconds
-    const numSeconds = Math.floor(Math.random() * (60 - 10 + 1) + 10);
-    let now = new Date();
-    now.setSeconds(now.getSeconds() + numSeconds);
-    const startTime = new Date(now);
+    // Generate a number between 10 and 60 seconds
+    const randMs = Math.floor(Math.random() * (60000 - 10000 + 1) + 10000);
+    const now = Date.now();
+    const startTimeMs = now + randMs; // Start time is between 10 and 60 seconds from now
+    const gameDuration = 60000; // Duration is 1 minute after start time
 
     // Create game object
     const game = {
@@ -38,8 +42,9 @@ const createGame = (id) => {
         team1Score: 0,
         team2Score: 0,
         stadium: stadium,
-        status: 0,
-        startTime: startTime
+        status: "Upcoming",
+        startTimeMs: startTimeMs,
+        gameDuration: gameDuration
     };
 
     return game;
@@ -47,21 +52,42 @@ const createGame = (id) => {
 
 export default function HomePage() {
 
-    const [games, setGames] = useState([]);
+    const [games, setGames] = useState(() => {
+        const loaded = JSON.parse(localStorage.getItem('games'));
+        return loaded || [];
+    });
 
     useEffect(() => {
-        // Create 5 games
-        const tempArr = [];
-        for(let i = 1; i <= 5; i++)
-            tempArr.push(createGame(i));
-        setGames(tempArr);
-    }, []);
+        if(games.length < NUM_GAMES) {
+            let tempArr = games.slice();
+            while(tempArr.length < NUM_GAMES)
+                tempArr.push(createGame());
+            tempArr.sort((a, b) => a.startTimeMs - b.startTimeMs);
+            localStorage.setItem('games', JSON.stringify(tempArr));
+            setGames(tempArr);
+        }
+    }, [games]);
+
+    const handleUpdate = (data) => {
+        const index = games.findIndex(g => g.id === data.id);
+        if(index > -1) {
+            let tempArr = games.slice();
+            if(data.status === "Ended") {
+                tempArr.splice(index, 1);
+            }
+            else {
+                tempArr[index] = data;
+            }
+            localStorage.setItem('games', JSON.stringify(tempArr));
+            setGames(tempArr);
+        }
+    };
 
     return (
         <div className="page">
             <div className="game-list">
                 {games && games.map(gameData => (
-                    <GameListItem key={gameData.id} data={gameData} />
+                    <GameListItem key={gameData.id} data={gameData} onUpdate={handleUpdate} />
                 ))}
             </div>
         </div>
