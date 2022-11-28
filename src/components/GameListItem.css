@@ -1,0 +1,19 @@
+.game-list-item {
+    margin: 25px 0px;
+}
+
+.teams {
+    display: flex;
+    background: #fff;
+    color: #000;
+    font-size: 2em;
+}
+
+.team-name {
+    min-width: 300px;
+    text-align: center;
+}
+
+.v-separator {
+
+}
