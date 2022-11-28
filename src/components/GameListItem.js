@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import '../components/GameListItem.css';
 
+const SCORE_CHANCE = 0.133;
+
 export default function GameListItem({ data, onUpdate }) {
 
     const handleGameStarted = () => {
@@ -13,6 +15,12 @@ export default function GameListItem({ data, onUpdate }) {
         data.status = "Ended";
         onUpdate(data);
     };
+
+    const handleScoreGoal = (team) => {
+        if(team === 1) data.team1Score++;
+        else if(team === 2) data.team2Score++;
+        onUpdate(data);
+    }
 
     const statusClass = data.status.replace(/\s/, '-').toLowerCase();
 
@@ -31,6 +39,7 @@ export default function GameListItem({ data, onUpdate }) {
                         gameDuration={data.gameDuration}
                         onGameStarted={handleGameStarted}
                         onGameEnded={handleGameEnded}
+                        onScoreGoal={handleScoreGoal}
                     ></Timer>
                     <div className="stadium">{data.stadium}</div>
                 </div>
@@ -39,7 +48,7 @@ export default function GameListItem({ data, onUpdate }) {
     );
 }
 
-function Timer({ startTimeMs, gameDuration, onGameStarted, onGameEnded }) {
+function Timer({ startTimeMs, gameDuration, onGameStarted, onGameEnded, onScoreGoal }) {
 
     const [counter, setCounter] = useState(startTimeMs - Date.now());
     const [gameStarted, setGameStarted] = useState(startTimeMs <= Date.now());
@@ -50,10 +59,13 @@ function Timer({ startTimeMs, gameDuration, onGameStarted, onGameEnded }) {
     useEffect(() => {
         const id = setInterval(() => {
             setCounter(startTimeMs - Date.now());
+            const didScoreGoal = Math.random() <= SCORE_CHANCE;
+            if(didScoreGoal && gameStarted)
+                onScoreGoal(Math.floor((Math.random() * 2 + 1)));
         }, 1000);
         intervalRef.current = id;
         return () => clearInterval(id);
-    }, [startTimeMs]);
+    }, [startTimeMs, onScoreGoal, gameStarted]);
 
     useEffect(() => {
         if(counter <= 0 && !gameStarted) {
