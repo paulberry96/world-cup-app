@@ -51,7 +51,7 @@ export default function GameListItem({ data, onUpdate }) {
 function Timer({ startTimeMs, gameDuration, onGameStarted, onGameEnded, onScoreGoal }) {
 
     const [counter, setCounter] = useState(startTimeMs - Date.now());
-    const [gameStarted, setGameStarted] = useState(startTimeMs <= Date.now());
+    const [gameStarted, setGameStarted] = useState(false);
     const [gameEnded, setGameEnded] = useState(false);
 
     const intervalRef = useRef(0);
