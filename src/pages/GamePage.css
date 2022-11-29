@@ -1,0 +1,100 @@
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.game {
+    width:800px;
+    background: #262626;
+    margin-top:40px;
+}
+
+.game .teams {
+    display: grid;
+    grid-auto-columns: 1fr 1fr 1fr;
+    grid-auto-flow: column;
+    padding:20px;
+    font-size: 28px;
+    font-weight: 700;
+    align-items: center;
+}
+
+.game .teams > div {
+    text-align: center;
+}
+
+.game .teams .score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game .teams .score-num {
+    font-size: 1.8em;
+}
+
+.game .teams .score-sep {
+    margin: 0px 40px;
+}
+
+.game .details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0px;
+}
+
+.game .details > div {
+    margin-bottom: 12px;
+}
+
+.game .status {
+    border-radius: 4px;
+    padding: 2px 8px;
+}
+
+.game .status.upcoming {
+    background-color:#91582f;
+}
+
+.game .status.in-progress {
+    background-color:#3f8939;
+}
+
+.game .status.ended {
+    background-color:#1b1b1b;
+}
+
+.game .players-wrapper {
+    border-top: 1px solid rgb(255 255 255 / 10%);
+}
+
+.game .players-wrapper .title {
+    padding:20px 0px;
+    font-size:30px;
+    text-align: center;
+}
+
+.game .players {
+    display: grid;
+    grid-auto-columns: 1fr 1fr;
+    grid-auto-flow: column;
+}
+
+.game .player-list:last-child {
+    text-align: right;
+}
+
+.game .player {
+    padding: 10px;
+}
+
+.game .player .pos {
+    display: inline-block;
+    background: #525252;
+    color: #cdcdcd;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 2px;
+    margin: 0px 5px;
+}

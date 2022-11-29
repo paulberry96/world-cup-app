@@ -4,7 +4,7 @@
     cursor:pointer;
 }
 
-.teams {
+.game-list-item .teams {
     display: flex;
     background: #262626;
     color: #f9f9f9;
@@ -13,42 +13,42 @@
     padding: 0px 0px 12px 0px;
 }
 
-.team-name {
+.game-list-item .team-name {
     min-width: 300px;
     text-align: center;
     margin-top:12px;
 }
 
-.score {
+.game-list-item .score {
     background: #eee;
     color: #333;
     padding: 6px 10px 0px 10px;
     border-radius: 0px 0px 10px 10px;
 }
 
-.status-bar {
+.game-list-item .status-bar {
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 5px 20px;
     border-radius:0px 0px 4px 4px;
 }
 
-.status-bar.status-upcoming {
+.game-list-item .status-bar.status-upcoming {
     background-color:#91582f;
 }
 
-.status-bar.status-in-progress {
+.game-list-item .status-bar.status-in-progress {
     background-color:#3f8939;
 }
 
-.game-status {
+.game-list-item .game-status {
     text-align: left;
 }
 
-.timer {
+.game-list-item .timer {
     text-align: center;
 }
 
-.stadium {
+.game-list-item .stadium {
     text-align: right;
 }
